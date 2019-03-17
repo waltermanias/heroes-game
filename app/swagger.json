@@ -1,0 +1,377 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "API Hero's Game"
+    },
+    "host": "localhost:3000",
+    "basePath": "/", 
+    "schemes": [
+      "http"
+    ],
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+      "/users": {
+        "post": {
+          "summary": "Create new user.",
+          "operationId": "createUser",
+          "tags": [
+            "Security"
+          ],
+          "parameters": [
+            {
+                "name": "user",
+                "in": "body",
+                "description": "Set the user's properties.",
+                "required": true,
+                "schema" : { "$ref" : "#/definitions/dtoRequestUser" }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "User created.",
+              "schema": {
+                "$ref": "#/definitions/dtoResponseUser"
+              },
+              "headers": {
+                "Location": {
+                  "type": "string",
+                  "description": "The location of new user."
+                }
+              }
+            },
+            "400": {
+              "description": "Parameters are not valid.",
+              "schema": {
+                "$ref": "#/definitions/dtoError"
+              }
+            },
+            "500": {
+              "description": "Unexpected error.",
+              "schema": {
+                "$ref": "#/definitions/dtoError"
+              }
+            }
+          }
+        }
+      },
+      "/login": {
+        "post": {
+          "summary": "Login user.",
+          "operationId": "Login",
+          "tags": [
+            "Security"
+          ],
+          "parameters": [
+            {
+                "name": "user",
+                "in": "body",
+                "description": "Set the user's credentials.",
+                "required": true,
+                "schema" : { "$ref" : "#/definitions/dtoRequestUser" }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successfully login.",
+              "schema": {
+                "$ref": "#/definitions/dtoResponseLogin"
+              }
+            },
+            "404": {
+              "description": "Parameters are not valid.",
+              "schema": {
+                "$ref": "#/definitions/dtoError"
+              }
+            },
+            "500": {
+              "description": "Unexpected error.",
+              "schema": {
+                "$ref": "#/definitions/dtoError"
+              }
+            }
+          }
+        }
+      },
+      "/heroes" : {
+          "get" : {
+            "summary": "Get random hero from Marvel's API.",
+            "operationId": "getHero",
+            "tags": [
+              "Heroes"
+            ],
+            "parameters" : [],
+            "responses": {
+              "200": {
+                "description": "Query successfully.",
+                "schema": {
+                  "$ref": "#/definitions/dtoHero"
+                }
+              },
+              "500": {
+                "description": "Unexpected error.",
+                "schema": {
+                  "$ref": "#/definitions/dtoError"
+                }
+              }
+            }   
+          }
+      },
+      "/battles" : {
+        "post": {
+          "summary": "Create new battle.",
+          "operationId": "createBattle",
+          "tags": [
+            "Battles"
+          ],
+          "parameters" : [
+            {
+                "name": "Authorization", 
+                "in" : "header",
+                "description": "User's token.",
+                "required": true, 
+                "default" : "Bearer "
+            },
+            {
+              "name": "battle",
+              "in": "body",
+              "description": "Create new battle.",
+              "required": true,
+              "schema" : { "$ref" : "#/definitions/dtoRequestBattle" }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Battle created successfully.",
+              "headers": {
+                "Location": {
+                  "type": "string",
+                  "description": "The location of new battle."
+                }
+              },
+              "schema": {
+                "$ref": "#/definitions/dtoResponseBattle"
+              }
+            },
+            "400" : {
+              "description": "The body is not valid.",
+              "schema": {
+                "$ref": "#/definitions/dtoError"
+              }
+            },
+            "403" : {
+                "description": "The endpoint require authentication.",
+                "schema": {
+                  "$ref": "#/definitions/dtoError"
+                }
+            },
+            "500": {
+              "description": "Unexpected error.",
+              "schema": {
+                "$ref": "#/definitions/dtoError"
+              }
+            }
+          }
+        }
+      },
+      "/battles/{battleId}/players/{playerId}/movements" : {
+        "post": {
+            "summary": "Send a new movement to the opponent.",
+            "operationId": "sendMovement",
+            "tags": [
+              "Battles"
+            ],
+            "parameters" : [
+              {
+                  "name": "Authorization", 
+                  "in" : "header",
+                  "description": "User's token.",
+                  "required": true, 
+                  "default" : "Bearer "
+              },
+              {
+                "name": "battleId", 
+                "in" : "path",
+                "description": "Battle Id",
+                "required": true
+              },
+              {
+                "name": "playerId", 
+                "in" : "path",
+                "description": "Player Id",
+                "required": true
+              },
+              {
+                "name": "movement",
+                "in": "body",
+                "description": "Movement specification. The valid parameters are 'puch', 'kick' or 'shield'.",
+                "required": true,
+                "schema" : { "$ref" : "#/definitions/dtoRequestMovement" }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Movement sended successfully."
+              },
+              "400" : {
+                "description": "The body is not valid.",
+                "schema": {
+                  "$ref": "#/definitions/dtoError"
+                }
+              },
+              "403" : {
+                "description": "The endpoint require authentication.",
+                "schema": {
+                  "$ref": "#/definitions/dtoError"
+                }
+              },
+              "500": {
+                "description": "Unexpected error.",
+                "schema": {
+                  "$ref": "#/definitions/dtoError"
+                }
+              }
+            }
+          }
+      },
+      "/battles/{battleId}/players/{playerId}/life-status" : {
+        "get": {
+            "summary": "Get the player health in the battle.",
+            "operationId": "getHealthStatus",
+            "tags": [
+              "Battles"
+            ],
+            "parameters" : [
+              {
+                  "name": "Authorization", 
+                  "in" : "header",
+                  "description": "User's token.",
+                  "required": true, 
+                  "default" : "Bearer "
+              },
+              {
+                "name": "battleId", 
+                "in" : "path",
+                "description": "Battle Id",
+                "required": true
+              },
+              {
+                "name": "playerId", 
+                "in" : "path",
+                "description": "Player Id",
+                "required": true
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Query successfully.",
+                "schema" : {
+                    "$ref" : "#/definitions/dtoResponseHealthStatus"
+                }
+              },
+              "400" : {
+                "description": "The parameters are not valid.",
+                "schema": {
+                  "$ref": "#/definitions/dtoError"
+                }
+              },
+              "403" : {
+                "description": "The endpoint require authentication.",
+                "schema": {
+                  "$ref": "#/definitions/dtoError"
+                }
+              },
+              "500": {
+                "description": "Unexpected error.",
+                "schema": {
+                  "$ref": "#/definitions/dtoError"
+                }
+              }
+            }
+          }
+      }
+    },
+    "definitions": {
+      "dtoRequestUser" : {
+        "required" : [ "username", "password" ],
+        "properties" : {
+          "username" : { "type" : "string" },
+          "password" : { "type" : "string" }
+        }
+      },
+      "dtoResponseUser" : {
+        "required" : [ "id", "username" ],
+        "properties" : {
+          "id" : { "type" : "string" },
+          "username" : { "type" : "string" }
+        }
+      },
+      "dtoResponseLogin" : {
+        "required" : [ "token", "username" ],
+        "properties" : {
+          "username" : { "type" : "string" },
+          "token" : { "type" : "string" }
+        }
+      },
+      "dtoRequestBattle" : {
+        "required" : [ "playerA", "playerB" ],
+        "properties" : {
+          "playerA" : { "type" : "integer", "format" : "int32" },
+          "playerB" : { "type" : "integer", "format" : "int32" }
+        } 
+      },
+      "dtoResponseBattle" : {
+          "required" : [ "id", "owner", "createdAt" ],
+          "properties" : {
+              "id" : { "type" : "string" },
+              "owner" : { "type" : "string" },
+              "createdAt" : { "type" : "string", "format" : "date-time" },
+              "isOver" : { "type" : "boolean" },
+              "players" : { "type" : "array", "items" : { "$ref" : "#/definitions/dtoPlayer" }}
+          }
+      },
+      "dtoPlayer" : {
+          "properties" : {
+              "id" : { "type" : "string"},
+              "hero"  : { "$ref" : "#/definitions/dtoHero" },
+              "healthStatus" : { "type" : "integer", "format" : "int32" },
+              "battle" : { "type" : "string"}
+          }
+      },
+      "dtoHero" : {
+          "required" : ["id", "name"],
+          "properties" : {
+            "id" : { "type" : "string"},
+            "name" : { "type" : "string"}
+          }
+      },
+      "dtoRequestMovement" : {
+        "required" : [ "movement" ],
+        "properties" : {
+          "movement" : { "type" : "string" }
+        }  
+      },
+      "dtoResponseHealthStatus" : {
+        "required" : ["healthStatus"],
+        "properties" : {
+            "healthStatus" : { "type" : "integer" , "format" : "int32" }
+          }  
+      },
+      "dtoError" : {
+        "required": [],
+        "properties" : {
+          "status" : {
+            "type" : "integer", "format" : "int32"
+          },
+          "message" : {
+            "type" : "string"
+          }
+        }
+      }
+    }
+  }
