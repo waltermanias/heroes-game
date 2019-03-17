@@ -15,9 +15,13 @@ Let's get started! Enjoy it!
 - Open the .env file and modify some basic properties.
 
 **APP_PORT**: The application will run in this port.
+
 **MARVEL_API_PUBLIC_KEY**: Your Marvel's public key.
+
 **MARVEL_API_PRIVATE_KEY**: Your Marvel's private key.
+
 **MONGODB_CONNECTION**: Your MongoDB connection and the name of the database.
+
 **JWT_SECRET**: Your secret key to generate user's token.
 
 > You can obtain you Marvel's credentials in https://developer.marvel.com/docs
