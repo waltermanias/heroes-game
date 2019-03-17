@@ -1,4 +1,4 @@
-#Heroes API Game
+##Heroes API Game
 
 The game allows you to get heroes from Marvel's API and create a battle between two heroes. In the battle, the players can send differents movements and lose or recover his life.
 
