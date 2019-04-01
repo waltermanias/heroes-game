@@ -1,0 +1,13 @@
+.fight{
+    margin-top: 2rem;
+}
+
+.center-vs{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.play-button{
+    margin-top: 1rem;
+}

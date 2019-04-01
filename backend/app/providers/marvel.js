@@ -13,7 +13,11 @@ exports.getHeroById = async(id) => {
         
         let dto_id = response.data.data.results[0].id;
         let dto_name = response.data.data.results[0].name;
-        let hero = new Hero(dto_id, dto_name);
+        let dto_description = response.data.data.results[0].description;
+        let dto_thumbnail;
+        if(response.data.data.results[0].thumbnail)
+                dto_thumbnail =`${response.data.data.results[0].thumbnail.path}.${response.data.data.results[0].thumbnail.extension}`;
+        let hero = new Hero(dto_id, dto_name, dto_description, dto_thumbnail);
         return hero;
         
 };

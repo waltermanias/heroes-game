@@ -1,0 +1,72 @@
+.hero-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0.48);
+    padding: 25px 14px 25px 14px;
+    height: 75vh;
+}
+
+.hero{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%
+}
+
+.hero-body{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.hero-thumbnail{
+    background-image: url('http://i.annihil.us/u/prod/marvel/i/mg/5/a0/538615ca33ab0.jpg');
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: .5rem;  
+    overflow: hidden;  
+} 
+
+.hero-description{
+    margin-bottom: 10px;
+    font-size: .65rem;
+    max-height: 75px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.action-container{
+    width: 100%;
+}
+
+.progress{
+    margin-bottom: .5rem;
+}
+
+.waiting-message {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    width: 100%
+}
+
+.waiting-header{
+    font-size: 2rem;
+    text-align: center;
+}
+
+.waiting-header h1{
+    margin-bottom: 0px;
+}
+
+.waiting-body{
+    text-align: center;
+}
