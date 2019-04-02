@@ -8,7 +8,7 @@ class AuthService {
 
     static login(username, password, cb){
 
-        localStorage.removeItem( 'AuthToken' );
+       localStorage.clear();
 
        let body = JSON.stringify({
             username,
@@ -28,8 +28,8 @@ class AuthService {
             else if( resolve.status ===200 )
             {
                 return resolve.json().then( data => {
-                    
                     localStorage.setItem( 'AuthToken', data.token );
+                    localStorage.setItem( 'Username' , data.username );
                     if(cb)
                         cb(null);
                 });
@@ -40,7 +40,7 @@ class AuthService {
     }
 
     static logout(){
-        localStorage.removeItem( 'AuthToken' );
+        localStorage.clear();
     }
 
     static isAuthenticated()
@@ -50,6 +50,15 @@ class AuthService {
             return true;
         else
             return false;
+    }
+
+    static getUsername(){
+        if(this.isAuthenticated())
+        {
+            let username = localStorage.getItem('Username');
+            return username;
+        }
+        return null;
     }
 
 }

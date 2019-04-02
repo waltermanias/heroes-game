@@ -35,7 +35,7 @@ class Header extends Component{
                 <div className="login-info">
                     <div>
                         <FontAwesomeIcon icon="user" />
-                        <span>walter.manias</span>
+                        <span>{ AuthService.getUsername() }</span>
                     </div>
                     <button className='logout-button' onClick={ this.onLogoutClickHandler }>
                         Logout
