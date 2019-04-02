@@ -1,41 +1,48 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Hero from '../hero/Hero';
 import { Button, Container, Row, Col } from 'react-bootstrap';
 import './Battle.css';
 import { HeroService, movements }  from '../../providers/hero-service';
 import HeroWonComponent from '../hero-won/hero-won';
-class BattleComponent extends Component{
+class Battle extends React.Component{
 
     constructor(){
         super();
         this.state = this.onCreateEmptyState();
     }
 
+    renderWinner = () => {
+        return (
+            <Container>
+                <Row>
+                    <Col sm={12}>
+                        <HeroWonComponent 
+                            winner = { this.state.winner }
+                            onRestartGame = { () => this.onRestartGame() }
+                        >
+                        </HeroWonComponent>      
+                    </Col>
+                </Row>
+            </Container>
+        )
+    }
+
     render(){
 
         return <div className="fight">
-            {this.state.showWinner &&
-                <Container>
-                    <Row>
-                        <Col sm={12}>
-                            <HeroWonComponent 
-                                winner = { this.state.winner }
-                                onRestartGame = { () => this.onRestartGame() }
-                            >
-                            </HeroWonComponent>      
-                        </Col>
-                    </Row>
-                </Container>
+            {this.state.winner!=null &&
+                this.renderWinner()
             }
-            {!this.state.showWinner &&
+            {!this.state.winner &&
                 <Container>
                     <Row>
                         <Col sm={5}>
                             <Hero 
-                                heroSelectionMode={ !this.state.isFighting } 
-                                onSelectedHero={ (hero) => this.onPlayerASelected( hero ) } 
+                                isFighting={ this.state.id.length===0 } 
                                 healthStatus={ this.state.playerA.healthStatus }
                                 playerId = { this.state.playerA.id }
+
+                                onSelectedHero={ (hero) => this.onPlayerASelected( hero ) } 
                                 onPunchHandler = { (playerId) => this.onPunchHandler( playerId ) }
                                 onKickHandler = { (playerId) => this.onKickHandler( playerId ) }
                                 onShieldHandler = { (playerId) => this.onShieldHandler( playerId ) }
@@ -47,10 +54,11 @@ class BattleComponent extends Component{
                         </Col>
                         <Col sm={5}>
                             <Hero 
-                                heroSelectionMode={ !this.state.isFighting } 
-                                onSelectedHero={ ( hero ) => this.onPlayerBSelected( hero ) } 
-                                healthStatus={ this.state.playerB.healthStatus } 
+                                isFighting={ this.state.id.length===0 } 
+                                healthStatus={ this.state.playerB.healthStatus }
                                 playerId = { this.state.playerB.id }
+
+                                onSelectedHero={ ( hero ) => this.onPlayerBSelected( hero ) } 
                                 onPunchHandler = { (playerId) => this.onPunchHandler( playerId ) }
                                 onKickHandler = { (playerId) => this.onKickHandler( playerId ) }
                                 onShieldHandler = { (playerId) => this.onShieldHandler( playerId ) }
@@ -58,7 +66,7 @@ class BattleComponent extends Component{
                             </Hero>
                         </Col>
                         <Col sm={12} className="play-button">
-                            {this.state.canCreateFight &&
+                            {this.canFight() &&
                                 <Button variant="primary" size="lg" block onClick={ this.onFightClick } >Fight!</Button>
                             }
                         </Col>
@@ -78,9 +86,6 @@ class BattleComponent extends Component{
     onCreateEmptyState = () => {
         let emptyState = {
             id : "",
-            canCreateFight : false,
-            isFighting : false,
-            showWinner : false,
             winner : null,
             playerA : { 
                 id : "",
@@ -104,42 +109,32 @@ class BattleComponent extends Component{
         return emptyState
     } 
         
-    
+    canFight()
+    {
+        let playerAIsSelected = this.state.playerA.hero && this.state.playerA.hero.id>0;
+        let playerBIsSelected = this.state.playerB.hero && this.state.playerB.hero.id>0;
+        return playerAIsSelected && playerBIsSelected && this.state.id.length===0;
+    }
 
     onPlayerASelected = ( hero ) => {
-
-        let canCreateFight = false;
-        if(this.state.playerB.hero.id>0)
-            canCreateFight = true;
-
         let state = {
             playerA : {
                 id : "", 
                 hero, 
                 healthStatus : 100 
             }, 
-            canCreateFight
         }
-
         this.setState( state );
-
     }
 
     onPlayerBSelected = ( hero ) => {
-
-        let canCreateFight = false;
-        if(this.state.playerA.hero.id>0)
-            canCreateFight = true;
-
         let state = {
             playerB : { 
                 id : "", 
                 hero, 
                 healthStatus : 100 
-            }, 
-            canCreateFight
+            }
         }
-        
         this.setState( state );
     }
 
@@ -162,7 +157,6 @@ class BattleComponent extends Component{
                 winner = this.state.playerB.hero;
 
             this.setState( { 
-                showWinner : true,
                 winner 
             });
         }       
@@ -226,7 +220,6 @@ class BattleComponent extends Component{
             this.setState({ 
                 playerA,
                 playerB,
-                isFighting : true,
                 canCreateFight : false,
                 id : battle.id} 
             );
@@ -237,6 +230,4 @@ class BattleComponent extends Component{
     
 }
 
-
-
-export default BattleComponent;
+export default Battle;
