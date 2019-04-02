@@ -1,10 +1,5 @@
 
-const baseUrl = "http://localhost:3000";    
-
-let headers = {
-    'Content-Type': 'application/json',
-    'Authorization' : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVjOGQ2Nzk1ZTYzMGQ0MzlmYzgwYzhjNyIsImlhdCI6MTU1NDA4ODk4NiwiZXhwIjoxNTU0MDkyNTg2fQ.cB2I3IJPGbvS_opRMX5Mt4d5msmSLqqQ0Y24h_zpjZk'
-}
+import { baseUrl } from './config';
 
 const movements = {
     PUNCH : 'punch',
@@ -14,6 +9,15 @@ const movements = {
 
 class HeroService {
     
+    static getHeaders()
+    {
+        let headers = {
+            'Content-Type': 'application/json',
+            'Authorization' : `Bearer ${ localStorage.getItem('AuthToken') }` 
+        }
+        return headers;
+    }
+
     static getHero(){    
         return fetch(`${baseUrl}/heroes`).then( resolve =>{
             return resolve.json();
@@ -32,7 +36,7 @@ class HeroService {
         let options = {
             method : 'POST',
             body,
-            headers
+            headers : this.getHeaders()
         }
 
         return fetch(`${baseUrl}/battles`, options).then( resolve => {
@@ -52,7 +56,7 @@ class HeroService {
         let options = {
             method : 'POST',
             body,
-            headers
+            headers : this.getHeaders()
         }
 
         return new Promise( function (resolve, reject){
@@ -77,7 +81,7 @@ class HeroService {
 
         let options = {
             method : 'GET',
-            headers
+            headers : this.getHeaders()
         }
 
         return fetch(`${baseUrl}/battles/${ battleId }/players/${ playerId }/life-status`, options).then( resolve => {

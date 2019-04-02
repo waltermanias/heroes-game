@@ -8,7 +8,7 @@ exports.login = async( req, res ) => {
 
     if(!req.body.username || !req.body.password)
     {
-        logger.warning(`An invalid attemp to login has been registered.`);
+        logger.warn(`An invalid attemp to login has been registered.`);
         return res.status(400).json( new CustomError( 400, 'The username and password are required.' ) );
     }
         
@@ -16,7 +16,7 @@ exports.login = async( req, res ) => {
 
     if(!user || !bcrypt.compareSync( req.body.password, user.password ))
     {
-        logger.warning(`An invalid attemp to login has been registered.`);
+        logger.warn(`An invalid attemp to login has been registered.`);
         return res.status(401).json( new CustomError(401, 'The username or password are not valid.') );
     }
 

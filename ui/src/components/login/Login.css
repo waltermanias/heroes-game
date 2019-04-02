@@ -1,7 +1,7 @@
 
 
 
-.login span{
+.login-header span{
     font-weight: bold;
     font-size: 1.2rem;
 }
@@ -58,4 +58,10 @@
 .login-body{
     padding: 20px;
     background-color: rgba(255, 255, 255, 0.22);
+}
+
+.validation-message{
+    font-size: .7rem;
+    font-weight: bold;
+    color: white;
 }

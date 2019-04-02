@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import Hero from '../hero/Hero';
 import { Button, Container, Row, Col } from 'react-bootstrap';
-import './Fight.css';
+import './Battle.css';
 import { HeroService, movements }  from '../../providers/hero-service';
 import HeroWonComponent from '../hero-won/hero-won';
-class FightComponent extends Component{
+class BattleComponent extends Component{
 
     constructor(){
         super();
@@ -239,4 +239,4 @@ class FightComponent extends Component{
 
 
 
-export default FightComponent;
+export default BattleComponent;
