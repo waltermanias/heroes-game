@@ -1,6 +1,27 @@
 const marvel = require('../providers/marvel');
 const logger = require('../helpers/logger');
 const { CustomError } = require('../entities/custom-error');
+
+exports.getHeroes = async( req, res) => {
+    try {
+        
+        if(!req.query.nameStartsWith)
+            return res.status(400).json(new CustomError(400, "The param 'nameStartWith' is required.") );
+
+        // get hero from Marvel API
+        let heroes = await marvel.getHeroes( req.query.nameStartsWith );    
+
+        // return hero to the client
+        return res.status(200).json(heroes);
+
+    } catch (err) 
+    {
+        logger.error(err);
+        return res.status(500).json(new CustomError(500, 'Oops! Something went wrong.'));
+    }
+    
+}
+
 exports.getRandomHero = async( req, res ) => {
 
     // define an array with 10 hero's id

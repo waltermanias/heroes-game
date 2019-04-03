@@ -9,7 +9,7 @@ class HeroWon extends Component{
             return (
             <div className="custom-container">
                 <div className="custom-body">
-                    <div className="hero-thumbnail" style = { {backgroundImage: `url("${ this.props.winner.thumbnail }")` } } >
+                    <div className="hero-winner-thumbnail" style = { {backgroundImage: `url("${ this.props.winner.thumbnail }")` } } >
                     </div>
                     <h1>{ this.props.winner.name } WON!</h1>
                     <small>The game is over...</small>

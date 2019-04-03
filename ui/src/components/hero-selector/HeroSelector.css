@@ -1,0 +1,107 @@
+.hero-selector-container{
+    /* background-color: rgba(0, 0, 0, 0.48); */
+    /* padding: 10px; */
+    height: 100%;
+}
+
+.hero-selector-container ul{
+    padding: 0px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 380px;
+}
+
+.hero-selector-container ul::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  /* Estilos barra (thumb) de scroll */
+.hero-selector-container ul::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+  }
+  
+  .hero-selector-container ul::-webkit-scrollbar-thumb:active {
+    background-color: #999999;
+  }
+  
+  .hero-selector-container ul::-webkit-scrollbar-thumb:hover {
+    background: #b3b3b3;
+    box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+  }
+  
+   /* Estilos track de scroll */
+   .hero-selector-container ul::-webkit-scrollbar-track {
+    background: #e1e1e1;
+    border-radius: 4px;
+  }
+  
+  .hero-selector-container ul::-webkit-scrollbar-track:hover, 
+  .hero-selector-container::-webkit-scrollbar-track:active {
+    background: #d4d4d4;
+  }
+
+.hero-search-box{
+    border-bottom: 1px solid white;
+    width: 100%;
+    padding: 5px;
+    padding-left: 10px;
+    display: flex;
+    margin-bottom: 5px;
+    align-items: center;
+}
+
+.hero-search-box input{
+    background-color: transparent;
+    border: none;
+    color: white;
+    outline: none;
+    width: 100%;
+    margin-left: 10px;
+    
+}
+
+.hero-item{
+    list-style:none;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor : pointer;
+    border-bottom: 3px solid transparent;
+    color: #afafafcf;
+}
+
+.hero-item:hover{
+    border-bottom: 3px solid #1fa567;
+    background-color: rgba(0, 0, 0, 0.48);
+    color: white;
+}
+
+.hero-item-thumbnail{
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+    margin: 0px 5px 0px 0px;
+    height: 32px!important;
+    width: 32px!important;
+    flex: 0 0 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    /* margin-bottom: .5rem;  */
+    overflow: hidden;  
+}
+
+.hero-item p{
+    font-size: .65rem;
+}
+
+.hero-item-body{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.not-found-text{
+  font-size: .7rem;
+}

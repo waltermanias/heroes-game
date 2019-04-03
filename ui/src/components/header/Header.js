@@ -19,7 +19,7 @@ class Header extends Component{
         return (
         <div className="header">
             <div className='header-body'>
-                <img src={ logo } alt="logo"></img>
+                <img src={ logo } alt="logo" onClick={ () => this.props.history.push('/') } style={ { cursor : "pointer" } }></img>
                 <span>
                     Marvel's App <small>by Walter Maniás</small>
                 </span>
@@ -37,6 +37,9 @@ class Header extends Component{
                         <FontAwesomeIcon icon="user" />
                         <span>{ AuthService.getUsername() }</span>
                     </div>
+                    <button className='logout-button' onClick={ () => this.props.history.push('/battles') }>
+                        Battles
+                    </button>
                     <button className='logout-button' onClick={ this.onLogoutClickHandler }>
                         Logout
                     </button>

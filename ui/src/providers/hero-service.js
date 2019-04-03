@@ -19,7 +19,16 @@ class HeroService {
     }
 
     static getHero(){    
-        return fetch(`${baseUrl}/heroes`).then( resolve =>{
+        return fetch(`${baseUrl}/heroes/random`).then( resolve =>{
+            return resolve.json();
+        }).then( data =>{
+            return data;
+        });
+    }
+
+    static getHeroesByName(name)
+    {
+        return fetch(`${baseUrl}/heroes?nameStartsWith=${ name }`).then( resolve =>{
             return resolve.json();
         }).then( data =>{
             return data;

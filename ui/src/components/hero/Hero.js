@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import { Button, ProgressBar } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import './Hero.css';
 import { HeroService } from '../../providers/hero-service';
+import  HeroSelector  from '../hero-selector/HeroSelector';
 import { css } from '@emotion/core';
 import { RingLoader } from 'react-spinners';
-
+import './Hero.css';
 
 const override = css`
     display: block;
@@ -19,7 +19,8 @@ class Hero extends Component{
         super();
         this.state = {
             isLoading : false,
-            hero : null
+            hero : null,
+            selectingHero : false
         }
     }
 
@@ -49,7 +50,8 @@ class Hero extends Component{
         if(this.props.isFighting)
             return (
                 <div>
-                    <Button variant="primary" size="sm" type="submit" block onClick={ () => this.handleHeroSelection(this.props.onSelectedHero) }>Select Hero</Button>
+                    <Button variant="primary" size="sm" type="submit" block onClick={ () => this.handleRandomHeroSelection(this.props.onSelectedHero) }>Random Hero</Button>
+                    <Button variant="primary" size="sm" type="submit" block onClick={ () => this.setState( { selectingHero : true } ) }>Select Custom Hero</Button>
                 </div>
             );
             
@@ -70,8 +72,10 @@ class Hero extends Component{
             {this.state.isLoading &&
                 this.renderLoading()
             }
-
-            {!this.state.isLoading &&
+            {this.state.selectingHero &&
+                <HeroSelector onSelectedHero= { (hero) => this.handleCustomHeroSelection( hero ) } style = { { height : "100%" } }  ></HeroSelector>
+            }
+            {!this.state.isLoading && !this.state.selectingHero &&
                 <div className="hero">
                     <div>
                         {this.state.hero &&
@@ -96,7 +100,7 @@ class Hero extends Component{
 
     //#region Handlers
 
-        handleHeroSelection = (onSelectedHero) => {
+        handleRandomHeroSelection = (onSelectedHero) => {
 
             this.setState( { isLoading : true } );
 
@@ -112,6 +116,11 @@ class Hero extends Component{
                 onSelectedHero( hero );
 
             });
+        }
+
+        handleCustomHeroSelection = ( hero ) => {
+            this.setState( { hero, selectingHero : false } );
+            this.props.onSelectedHero( hero );
         }
 
         handleClick = (cb) => {

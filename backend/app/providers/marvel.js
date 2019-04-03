@@ -21,3 +21,20 @@ exports.getHeroById = async(id) => {
         return hero;
         
 };
+
+exports.getHeroes = async(name) => {
+
+        let ts = '1';
+        let hash = crypto.createHash('md5').update( ts + process.env.MARVEL_API_PRIVATE_KEY + process.env.MARVEL_API_PUBLIC_KEY ).digest('hex');
+        let url = `https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=${ name }&orderBy=name&limit=10&offset=0&apikey=${ process.env.MARVEL_API_PUBLIC_KEY }&ts=${ ts }&hash=${ hash }`;
+        console.log(url);
+        let response = await axios.get(url);
+
+        return response.data.data.results.map( h => {
+                let hero = new Hero( h.id, h.name, h.description );
+                if(h.thumbnail)
+                        hero.thumbnail = `${h.thumbnail.path}.${h.thumbnail.extension}`
+                return hero;
+        })
+
+}

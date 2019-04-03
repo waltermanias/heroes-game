@@ -9,12 +9,13 @@ import HomeComponent from './components/home/Home'
 import BattleComponent from './components/battle/Battle'
 import { ProtectedRoute } from './components/protected-route/ProtectedRoute';
 import {
-  faUser, faLock
+  faUser, faLock, faSearch
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
   faUser,
-  faLock
+  faLock,
+  faSearch
 )
 
 class App extends Component {

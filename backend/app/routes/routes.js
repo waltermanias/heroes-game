@@ -11,7 +11,8 @@ const { battleAndPlayerValidator } = require('../middlewares/player-validators')
 app.post('/battles', auth, battlesRoute.saveBattle);
 app.post('/battles/:battleId/players/:playerId/movements', auth, battleAndPlayerValidator, battlesRoute.saveMovement);
 app.get('/battles/:battleId/players/:playerId/life-status', auth, battleAndPlayerValidator, battlesRoute.getLifeStatus);
-app.get('/heroes', heroesRoute.getRandomHero);
+app.get('/heroes/random', heroesRoute.getRandomHero);
+app.get('/heroes', heroesRoute.getHeroes);
 app.post('/users', usersRoute.saveUser );
 app.use( '/login', loginRoute.login );
 
